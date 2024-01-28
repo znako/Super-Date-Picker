@@ -1,0 +1,46 @@
+.calendarContainer {
+    width: 300px;
+
+    &__header {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    &__title {
+        text-align: center;
+    }
+}
+
+.dateContainer {
+    display: grid;
+    grid-template-columns: repeat(7, 30px);
+    column-gap: 15px;
+
+    &__element {
+        width: 35px;
+        height: 35px;
+        line-height: 35px;
+        text-align: center;
+    }
+
+    &__date {
+        cursor: pointer;
+
+        &:hover {
+            font-size: 13pt;
+            text-decoration: underline;
+        }
+
+        &_current {
+            text-decoration: underline;
+            color: rgb(45, 106, 175);
+        }
+
+        &_selected {
+            text-decoration: none;
+            background-color: rgb(45, 106, 175);
+            color: white;
+            font-weight: bold;
+        }
+    }
+}
