@@ -8,8 +8,10 @@ import {
     startOfMonth,
 } from "date-fns";
 import { useCallback, useEffect, useState } from "react";
-import { classNames } from "../../classNames/classNames";
+import { classNames } from "../../shared/lib/classNames/classNames";
 import "./Calendar.scss";
+import { CalendarElement } from "./CalendarElement/CalendarElement";
+import { CalendarHeader } from "./CalendarHeader/CalendarHeader";
 
 export const WEEKDAYS = ["MO", "TU", "WE", "TH", "FR", "SA", "SU"];
 
@@ -29,7 +31,7 @@ export const Calendar = (props: CalendarProps) => {
         end: lastDayOfMonth,
     });
 
-    const onClickArrow = (type: "next" | "prev") => () => {
+    const onClickArrowHeader = (type: "next" | "prev") => () => {
         const newDate = addMonths(date, type === "next" ? 1 : -1);
         onChangeDate(newDate);
         setDate(newDate);
@@ -46,32 +48,26 @@ export const Calendar = (props: CalendarProps) => {
 
     return (
         <div className="calendarContainer">
-            <div className="calendarContainer__header">
-                <button onClick={onClickArrow("prev")}>prev</button>
-                <h2 className="calendarContainer__title">
-                    {format(date, "MMMM yyyy")}
-                </h2>
-                <button onClick={onClickArrow("next")}>next</button>
-            </div>
+            <CalendarHeader
+                onClickArrowHeader={onClickArrowHeader}
+                date={date}
+            />
             <div className="dateContainer">
                 {WEEKDAYS.map((weekday) => (
-                    <div key={weekday} className="dateContainer__element">
-                        {weekday}
-                    </div>
+                    <CalendarElement key={weekday}>{weekday}</CalendarElement>
                 ))}
                 {new Array((getDay(firstDayOfMonth) || 7) - 1)
                     .fill(0)
                     .map((_, index) => (
-                        <div
+                        <CalendarElement
                             key={"empty-" + index}
-                            className="dateContainer__element"
-                        ></div>
+                        ></CalendarElement>
                     ))}
                 {daysInMonth.map((day, index) => (
-                    <div
+                    <CalendarElement
                         key={index}
                         className={classNames(
-                            "dateContainer__element",
+                            "dateContainer__date",
                             {
                                 dateContainer__date_current: isSameDay(
                                     day,
@@ -82,12 +78,12 @@ export const Calendar = (props: CalendarProps) => {
                                     date
                                 ),
                             },
-                            ["dateContainer__date"]
+                            []
                         )}
                         onClick={onClickDateHandler(day)}
                     >
                         {format(day, "d")}
-                    </div>
+                    </CalendarElement>
                 ))}
             </div>
         </div>

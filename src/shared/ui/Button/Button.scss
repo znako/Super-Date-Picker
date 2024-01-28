@@ -1,0 +1,25 @@
+.Button {
+    cursor: pointer;
+    border: none;
+    outline: none;
+    padding: 8px;
+    font-size: 17px;
+    border-radius: 5px;
+    font-weight: bold;
+
+    &_clear {
+        padding: 0;
+        background: none;
+    }
+
+    &_disabled {
+        opacity: 0.7;
+        cursor: not-allowed;
+    }
+}
+
+.Button:hover {
+    opacity: 0.8;
+    fill-opacity: 0.8;
+    stroke-opacity: 0.8;
+}

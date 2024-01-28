@@ -9,7 +9,7 @@ import {
     startOfMonth,
 } from "date-fns";
 import React, { useRef, useState } from "react";
-import { classNames } from "../classNames/classNames";
+import { classNames } from "../shared/lib/classNames/classNames";
 import { Calendar } from "./Calendar/Calendar";
 import "./SuperDatePicker.scss";
 

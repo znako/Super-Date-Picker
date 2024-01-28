@@ -1,0 +1,17 @@
+.CalendarHeader {
+    display: flex;
+    justify-content: space-between;
+
+    &__title {
+        text-align: center;
+    }
+
+    &__arrow {
+        width: 15px;
+        height: 15px;
+
+        &_left {
+            transform: rotate(180deg);
+        }
+    }
+}
