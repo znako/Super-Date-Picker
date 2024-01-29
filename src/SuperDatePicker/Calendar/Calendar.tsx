@@ -21,6 +21,7 @@ import "./Calendar.scss";
 import { CalendarElement } from "./CalendarElement/CalendarElement";
 import { CalendarHeader } from "./CalendarHeader/CalendarHeader";
 import { CalendarTimePicker } from "./CalendarTimePicker/CalendarTimePicker";
+import { CalendarYearOrMonthPicker } from "./CalendarYearOrMonthPicker/CalendarYearOrMonthPicker";
 
 export const WEEKDAYS = ["MO", "TU", "WE", "TH", "FR", "SA", "SU"];
 
@@ -31,9 +32,13 @@ interface CalendarProps {
 
 export const Calendar = (props: CalendarProps) => {
     const { onChangeDate, calssName } = props;
+    const [showYearOrMonthPicker, setShowYearOrMonthPicker] = useState<
+        null | "year" | "month"
+    >(null);
 
     const currentDate = new Date();
     const [date, setDate] = useState(currentDate);
+
     const firstDayOfMonth = startOfMonth(date);
     const lastDayOfMonth = endOfMonth(date);
     const daysInMonth = eachDayOfInterval({
@@ -83,6 +88,16 @@ export const Calendar = (props: CalendarProps) => {
             setDate(newDate);
         };
 
+    const onClickYearOrMonthPicker = (date: Date) => () => {
+        setDate(date);
+        onChangeDate(date);
+        setShowYearOrMonthPicker(null);
+    };
+
+    const onClickYearOrMonthHeader = (type: "year" | "month") => () => {
+        setShowYearOrMonthPicker(type);
+    };
+
     useEffect(() => {
         onChangeDate(currentDate);
     }, []);
@@ -93,6 +108,7 @@ export const Calendar = (props: CalendarProps) => {
                 <CalendarHeader
                     onClickArrowHeader={onClickArrowHeader}
                     date={date}
+                    onClick={onClickYearOrMonthHeader}
                 />
                 <div className="dateContainer">
                     {WEEKDAYS.map((weekday) => (
@@ -135,6 +151,13 @@ export const Calendar = (props: CalendarProps) => {
                 date={date}
                 onClickTimeHandler={onClickTimeHandler}
             />
+            {showYearOrMonthPicker && (
+                <CalendarYearOrMonthPicker
+                    date={date}
+                    onClick={onClickYearOrMonthPicker}
+                    type={showYearOrMonthPicker}
+                />
+            )}
         </div>
     );
 };

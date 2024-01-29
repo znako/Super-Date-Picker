@@ -1,0 +1,26 @@
+.CalendarYearOrMonthPicker {
+    position: absolute;
+    z-index: 9999;
+    width: 350px;
+    height: 280px;
+    display: grid;
+    background-color: white;
+    grid-template-columns: repeat(3, 116px);
+
+    &__element {
+        height: 45px;
+        line-height: 45px;
+        text-align: center;
+        cursor: pointer;
+
+        &:hover {
+            text-decoration: underline;
+        }
+
+        &_selected {
+            background-color: rgb(45, 106, 175);
+            color: white;
+            font-weight: bold;
+        }
+    }
+}
