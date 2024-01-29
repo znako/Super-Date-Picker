@@ -1,11 +1,18 @@
-.calendarContainer {
-    width: 300px;
+.Calendar {
+    width: 350px;
+    display: flex;
+    justify-content: space-between;
+
+    &__body {
+        display: flex;
+        gap: 40px;
+    }
 }
 
 .dateContainer {
     display: grid;
     grid-template-columns: repeat(7, 30px);
-    column-gap: 15px;
+    column-gap: 5px;
 
     &__date {
         cursor: pointer;

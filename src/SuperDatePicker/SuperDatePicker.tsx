@@ -22,8 +22,6 @@ const getFormattedDate = (date: Date) => {
 };
 
 export const SuperDatePicker = () => {
-    const targetDiv = useRef<null | HTMLDivElement>(null);
-    const [showCalendar, setShowCalendar] = useState(false);
     const [dateSide, setDateSide] = useState<null | DateSideType>(null);
     const [leftDate, setLeftDate] = useState<null | Date>(null);
     const [rightDate, setRightDate] = useState<null | Date>(null);
@@ -66,7 +64,6 @@ export const SuperDatePicker = () => {
                     </div>
                 </Popover>
             </div>
-            {showCalendar && <Calendar onChangeDate={onChangeDate} />}
         </div>
     );
 };

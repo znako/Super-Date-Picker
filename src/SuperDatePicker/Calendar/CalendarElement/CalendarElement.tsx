@@ -9,9 +9,13 @@ interface CalendarElementProps extends React.HTMLAttributes<HTMLDivElement> {
 export const CalendarElement = ({
     children,
     className,
+    onClick,
 }: CalendarElementProps) => {
     return (
-        <div className={classNames("CalendarElement", {}, [className])}>
+        <div
+            className={classNames("CalendarElement", {}, [className])}
+            onClick={onClick}
+        >
             {children}
         </div>
     );
