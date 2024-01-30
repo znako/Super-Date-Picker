@@ -1,0 +1,13 @@
+.DatePickerNow {
+    width: 350px;
+    margin-top: 10px;
+
+    &__text {
+        color: rgb(128, 128, 128);
+    }
+
+    &__button {
+        margin-top: 10px;
+        width: 100%;
+    }
+}

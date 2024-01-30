@@ -36,6 +36,14 @@ export const DatePickerControls = (props: DatePickerControlsProps) => {
             >
                 Relative
             </div>
+            <div
+                className={classNames("DatePickerControls__element", {
+                    DatePickerControls__element_selected: controlType === "now",
+                })}
+                onClick={onChangeControl("now")}
+            >
+                Now
+            </div>
         </div>
     );
 };

@@ -1,0 +1,10 @@
+.DatePickerRelative {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+
+    &__element {
+        width: 170px;
+        padding: 3px;
+    }
+}

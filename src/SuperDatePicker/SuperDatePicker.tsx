@@ -9,7 +9,8 @@ import {
     isSameDay,
     startOfMonth,
 } from "date-fns";
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
+import { Button, ButtonTheme } from "shared/ui/Button/Button";
 import { classNames } from "../shared/lib/classNames/classNames";
 import { Calendar } from "./Calendar/Calendar";
 import { DatePicker } from "./DatePicker/DatePicker";
@@ -33,6 +34,8 @@ export const SuperDatePicker = (props: SuperDatePickerProps) => {
     const { className, startDate, endDate } = props;
     const [dateSide, setDateSide] = useState<null | DateSideType>(null);
     const currentDate = new Date();
+    const [isLeftDateNow, setIsLeftDateNow] = useState<boolean>(false);
+    const [isRightDateNow, setIsRightDateNow] = useState<boolean>(false);
     const [leftDate, setLeftDate] = useState<Date>(startDate || currentDate);
     const [rightDate, setRightDate] = useState<Date>(
         endDate || addMinutes(currentDate, 30)
@@ -40,11 +43,6 @@ export const SuperDatePicker = (props: SuperDatePickerProps) => {
 
     const onClickDiv = (dateSide: DateSideType) => () => {
         setDateSide(dateSide);
-        // if (showCalendar) {
-        //     setShowCalendar((prevState) => !prevState);
-        // } else {
-        //     setShowCalendar(true);
-        // }
     };
 
     const onChangeDate = (day: Date) => {
@@ -56,35 +54,67 @@ export const SuperDatePicker = (props: SuperDatePickerProps) => {
         console.log(day);
     };
 
+    useEffect(() => {
+        console.log(leftDate);
+        console.log(rightDate);
+    }, [leftDate, rightDate]);
+
+    const onClickRefresh = () => {
+        if (isLeftDateNow) {
+            setLeftDate(new Date());
+        } else if (isRightDateNow) {
+            setRightDate(new Date());
+        }
+    };
+
     return (
-        <div>
-            <div className="inputWrapper">
+        <div className={classNames("SuperDatePicker", {}, [className])}>
+            <div className="SuperDatePicker-inputWrapper">
                 <Popover
                     content={
                         <DatePicker
+                            onSetIsNowDate={setIsLeftDateNow}
                             onChangeDate={onChangeDate}
                             date={leftDate}
                         />
                     }
                     trigger={"click"}
                 >
-                    <div onClick={onClickDiv("left")} className="input">
-                        {leftDate && getFormattedDate(leftDate)}
+                    <div
+                        onClick={onClickDiv("left")}
+                        className="SuperDatePicker-inputWrapper__input"
+                    >
+                        {isLeftDateNow
+                            ? "now"
+                            : leftDate && getFormattedDate(leftDate)}
                     </div>
                 </Popover>
                 <Popover
                     content={
                         <DatePicker
+                            onSetIsNowDate={setIsRightDateNow}
                             onChangeDate={onChangeDate}
                             date={rightDate}
                         />
                     }
                     trigger={"click"}
                 >
-                    <div onClick={onClickDiv("right")} className="input">
-                        {rightDate && getFormattedDate(rightDate)}
+                    <div
+                        onClick={onClickDiv("right")}
+                        className="SuperDatePicker-inputWrapper__input"
+                    >
+                        {isRightDateNow
+                            ? "now"
+                            : rightDate && getFormattedDate(rightDate)}
                     </div>
                 </Popover>
+                <Button
+                    onClick={onClickRefresh}
+                    theme={ButtonTheme.PRIMARY}
+                    className={"SuperDatePicker__button"}
+                >
+                    Refresh
+                </Button>
             </div>
         </div>
     );

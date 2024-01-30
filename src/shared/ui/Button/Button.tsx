@@ -4,6 +4,8 @@ import "./Button.scss";
 
 export enum ButtonTheme {
     CLEAR = "clear",
+    PRIMARY = "primary",
+    DISABLED = "disabled",
 }
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {

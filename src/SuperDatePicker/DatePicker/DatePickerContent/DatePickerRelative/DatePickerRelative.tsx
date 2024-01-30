@@ -120,8 +120,13 @@ export const DatePickerRelative = (props: DatePickerRelativeProps) => {
                 max={MAX_INPUT_VALUE}
                 value={inputValue}
                 onChange={onChangeInput}
+                className="DatePickerRelative__element"
             />
-            <select value={selectValue} onChange={onChangeSelect}>
+            <select
+                value={selectValue}
+                onChange={onChangeSelect}
+                className="DatePickerRelative__element"
+            >
                 {OPTIONS.map((option, index) => (
                     <option value={`${option} ago`} key={`ago-${index}`}>
                         {option} ago

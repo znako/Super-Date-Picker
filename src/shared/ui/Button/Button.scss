@@ -2,7 +2,7 @@
     cursor: pointer;
     border: none;
     outline: none;
-    padding: 8px;
+    padding: 4px;
     font-size: 17px;
     border-radius: 5px;
     font-weight: bold;
@@ -10,6 +10,11 @@
     &_clear {
         padding: 0;
         background: none;
+    }
+
+    &_primary {
+        color: white;
+        background-color: rgb(45, 106, 175);
     }
 
     &_disabled {

@@ -3,15 +3,16 @@ import { Calendar } from "SuperDatePicker/Calendar/Calendar";
 import { DatePickerContent } from "./DatePickerContent/DatePickerContent";
 import { DatePickerControls } from "./DatePickerControls/DatePickerControls";
 
-export type ControlTypes = "absolute" | "relative";
+export type ControlTypes = "absolute" | "relative" | "now";
 
 interface DatePickerProps {
     date: Date;
     onChangeDate: (day: Date) => void;
+    onSetIsNowDate: (isNowDate: boolean) => void;
 }
 
 export const DatePicker = (props: DatePickerProps) => {
-    const { onChangeDate, date } = props;
+    const { onChangeDate, date, onSetIsNowDate } = props;
     const [controlType, setControlType] = useState<ControlTypes>("absolute");
 
     const onChangeControl = (controlType: ControlTypes) => () => {
@@ -28,6 +29,7 @@ export const DatePicker = (props: DatePickerProps) => {
                 date={date}
                 controlType={controlType}
                 onChangeDate={onChangeDate}
+                onSetIsNowDate={onSetIsNowDate}
             />
         </div>
     );
