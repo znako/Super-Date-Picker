@@ -1,5 +1,6 @@
 import { Popover } from "antd";
 import {
+    addMinutes,
     addMonths,
     eachDayOfInterval,
     endOfMonth,
@@ -11,6 +12,7 @@ import {
 import React, { useRef, useState } from "react";
 import { classNames } from "../shared/lib/classNames/classNames";
 import { Calendar } from "./Calendar/Calendar";
+import { DatePicker } from "./DatePicker/DatePicker";
 import "./SuperDatePicker.scss";
 
 const WEEKDAYS = ["MO", "TU", "WE", "TH", "FR", "SA", "SU"];
@@ -21,10 +23,20 @@ const getFormattedDate = (date: Date) => {
     return format(date, "dd-MM-yyy HH:mm:ss.SSS");
 };
 
-export const SuperDatePicker = () => {
+interface SuperDatePickerProps {
+    className?: string;
+    startDate?: Date;
+    endDate?: Date;
+}
+
+export const SuperDatePicker = (props: SuperDatePickerProps) => {
+    const { className, startDate, endDate } = props;
     const [dateSide, setDateSide] = useState<null | DateSideType>(null);
-    const [leftDate, setLeftDate] = useState<null | Date>(null);
-    const [rightDate, setRightDate] = useState<null | Date>(null);
+    const currentDate = new Date();
+    const [leftDate, setLeftDate] = useState<Date>(startDate || currentDate);
+    const [rightDate, setRightDate] = useState<Date>(
+        endDate || addMinutes(currentDate, 30)
+    );
 
     const onClickDiv = (dateSide: DateSideType) => () => {
         setDateSide(dateSide);
@@ -48,7 +60,12 @@ export const SuperDatePicker = () => {
         <div>
             <div className="inputWrapper">
                 <Popover
-                    content={<Calendar onChangeDate={onChangeDate} />}
+                    content={
+                        <DatePicker
+                            onChangeDate={onChangeDate}
+                            date={leftDate}
+                        />
+                    }
                     trigger={"click"}
                 >
                     <div onClick={onClickDiv("left")} className="input">
@@ -56,7 +73,12 @@ export const SuperDatePicker = () => {
                     </div>
                 </Popover>
                 <Popover
-                    content={<Calendar onChangeDate={onChangeDate} />}
+                    content={
+                        <DatePicker
+                            onChangeDate={onChangeDate}
+                            date={rightDate}
+                        />
+                    }
                     trigger={"click"}
                 >
                     <div onClick={onClickDiv("right")} className="input">

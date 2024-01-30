@@ -27,27 +27,27 @@ export const WEEKDAYS = ["MO", "TU", "WE", "TH", "FR", "SA", "SU"];
 
 interface CalendarProps {
     onChangeDate: (day: Date) => void;
-    calssName?: string;
+    className?: string;
+    date: Date;
 }
 
 export const Calendar = (props: CalendarProps) => {
-    const { onChangeDate, calssName } = props;
+    const { onChangeDate, className, date } = props;
     const [showYearOrMonthPicker, setShowYearOrMonthPicker] = useState<
         null | "year" | "month"
     >(null);
 
-    const currentDate = new Date();
-    const [date, setDate] = useState(currentDate);
+    const [calendarDate, setDate] = useState(date);
 
-    const firstDayOfMonth = startOfMonth(date);
-    const lastDayOfMonth = endOfMonth(date);
+    const firstDayOfMonth = startOfMonth(calendarDate);
+    const lastDayOfMonth = endOfMonth(calendarDate);
     const daysInMonth = eachDayOfInterval({
         start: firstDayOfMonth,
         end: lastDayOfMonth,
     });
 
     const onClickArrowHeader = (type: "next" | "prev") => () => {
-        const newDate = addMonths(date, type === "next" ? 1 : -1);
+        const newDate = addMonths(calendarDate, type === "next" ? 1 : -1);
         onChangeDate(newDate);
         setDate(newDate);
     };
@@ -57,19 +57,22 @@ export const Calendar = (props: CalendarProps) => {
     function updateDate(dayOrHours: Date | number, minutes?: number): Date {
         if (minutes !== undefined && typeof dayOrHours === "number") {
             return setMilliseconds(
-                setSeconds(setMinutes(setHours(date, dayOrHours), minutes), 0),
+                setSeconds(
+                    setMinutes(setHours(calendarDate, dayOrHours), minutes),
+                    0
+                ),
                 0
             );
         } else {
             return setMilliseconds(
                 setSeconds(
                     setMinutes(
-                        setHours(dayOrHours, getHours(date)),
-                        getMinutes(date)
+                        setHours(dayOrHours, getHours(calendarDate)),
+                        getMinutes(calendarDate)
                     ),
-                    getSeconds(date)
+                    getSeconds(calendarDate)
                 ),
-                getMilliseconds(date)
+                getMilliseconds(calendarDate)
             );
         }
     }
@@ -98,16 +101,12 @@ export const Calendar = (props: CalendarProps) => {
         setShowYearOrMonthPicker(type);
     };
 
-    useEffect(() => {
-        onChangeDate(currentDate);
-    }, []);
-
     return (
-        <div className={classNames("Calendar", {}, [calssName])}>
+        <div className={classNames("Calendar", {}, [className])}>
             <div>
                 <CalendarHeader
                     onClickArrowHeader={onClickArrowHeader}
-                    date={date}
+                    date={calendarDate}
                     onClick={onClickYearOrMonthHeader}
                 />
                 <div className="dateContainer">
@@ -148,12 +147,12 @@ export const Calendar = (props: CalendarProps) => {
                 </div>
             </div>
             <CalendarTimePicker
-                date={date}
+                date={calendarDate}
                 onClickTimeHandler={onClickTimeHandler}
             />
             {showYearOrMonthPicker && (
                 <CalendarYearOrMonthPicker
-                    date={date}
+                    date={calendarDate}
                     onClick={onClickYearOrMonthPicker}
                     type={showYearOrMonthPicker}
                 />

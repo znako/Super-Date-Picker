@@ -1,6 +1,5 @@
 import React from "react";
-import "./App.css";
-import { SuperDatePicker } from "./SuperDatePicker/SuperDatePicker";
+import { SuperDatePicker } from "../SuperDatePicker/SuperDatePicker";
 
 function App() {
     return (
