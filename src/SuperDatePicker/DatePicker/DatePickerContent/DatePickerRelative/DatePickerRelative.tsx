@@ -9,6 +9,7 @@ import {
 } from "date-fns";
 import { useRef, useState } from "react";
 import { classNames } from "shared/lib/classNames/classNames";
+import { Button, ButtonTheme } from "shared/ui/Button/Button";
 import "./DatePickerRelative.scss";
 
 type OptionsType =
@@ -104,43 +105,54 @@ export const DatePickerRelative = (props: DatePickerRelativeProps) => {
             return;
         }
         setInputValue(newInputValue);
-        changeDate(newInputValue, selectValue);
     };
 
     const onChangeSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
         setSelectValue(e.target.value);
-        changeDate(inputValue, e.target.value);
+    };
+
+    const onClickSelectBtn = () => {
+        changeDate(inputValue, selectValue);
     };
 
     return (
         <div className={classNames("DatePickerRelative", {}, [className])}>
-            <input
-                type="number"
-                min={MIN_INPUT_VALUE}
-                max={MAX_INPUT_VALUE}
-                value={inputValue}
-                onChange={onChangeInput}
-                className="DatePickerRelative__element"
-            />
-            <select
-                value={selectValue}
-                onChange={onChangeSelect}
-                className="DatePickerRelative__element"
+            <div className="DatePickerRelative-inputsWrapper">
+                <input
+                    type="number"
+                    min={MIN_INPUT_VALUE}
+                    max={MAX_INPUT_VALUE}
+                    value={inputValue}
+                    onChange={onChangeInput}
+                    className="DatePickerRelative__element"
+                />
+                <select
+                    value={selectValue}
+                    onChange={onChangeSelect}
+                    className="DatePickerRelative__element"
+                >
+                    {OPTIONS.map((option, index) => (
+                        <option value={`${option} ago`} key={`ago-${index}`}>
+                            {option} ago
+                        </option>
+                    ))}
+                    {OPTIONS.map((option, index) => (
+                        <option
+                            value={`${option} from now`}
+                            key={`from now-${index}`}
+                        >
+                            {option} from now
+                        </option>
+                    ))}
+                </select>
+            </div>
+            <Button
+                onClick={onClickSelectBtn}
+                theme={ButtonTheme.PRIMARY}
+                className="DatePickerRelative__button"
             >
-                {OPTIONS.map((option, index) => (
-                    <option value={`${option} ago`} key={`ago-${index}`}>
-                        {option} ago
-                    </option>
-                ))}
-                {OPTIONS.map((option, index) => (
-                    <option
-                        value={`${option} from now`}
-                        key={`from now-${index}`}
-                    >
-                        {option} from now
-                    </option>
-                ))}
-            </select>
+                Select
+            </Button>
         </div>
     );
 };

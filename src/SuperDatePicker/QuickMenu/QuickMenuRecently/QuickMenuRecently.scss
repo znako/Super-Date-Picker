@@ -1,0 +1,17 @@
+.QuickMenuRecently {
+    &-container {
+        max-height: 220px;
+        overflow-y: scroll;
+        margin-top: 10px;
+    }
+
+    &__element {
+        cursor: pointer;
+        margin: 3px 0;
+        color: rgb(45, 106, 175);
+
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+}

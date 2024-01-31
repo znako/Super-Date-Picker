@@ -6,24 +6,24 @@ import { DatePickerRelative } from "./DatePickerRelative/DatePickerRelative";
 
 interface DatePickerContentProps {
     controlType: ControlTypes;
-    onChangeDate: (day: Date) => void;
+    onChangeDate: (day: Date, isNow?: boolean) => void;
     date: Date;
-    onSetIsNowDate: (isNowDate: boolean) => void;
 }
 
 export const DatePickerContent = (props: DatePickerContentProps) => {
-    const { controlType, onChangeDate, date, onSetIsNowDate } = props;
+    const { controlType, onChangeDate, date } = props;
 
     const [inputValueRelative, setInputValueRelative] = useState("");
     const [selectValueRelative, setSelectValueRelative] = useState("Days ago");
 
+    const resetRelatveState = () => {
+        setInputValueRelative("");
+        setSelectValueRelative("Days ago");
+    };
+
     useEffect(() => {
         if (controlType !== "relative") {
-            setInputValueRelative("");
-            setSelectValueRelative("Days ago");
-        }
-        if (controlType !== "now") {
-            onSetIsNowDate(false);
+            resetRelatveState();
         }
     }, [date]);
 
@@ -40,10 +40,7 @@ export const DatePickerContent = (props: DatePickerContentProps) => {
                     setSelectValue={setSelectValueRelative}
                 />
             ) : controlType === "now" ? (
-                <DatePickerNow
-                    onChangeDate={onChangeDate}
-                    onSetIsNowDate={onSetIsNowDate}
-                />
+                <DatePickerNow onChangeDate={onChangeDate} />
             ) : null}
         </>
     );

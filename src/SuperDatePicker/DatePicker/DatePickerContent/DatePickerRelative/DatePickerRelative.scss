@@ -1,10 +1,18 @@
 .DatePickerRelative {
-    display: flex;
-    justify-content: space-between;
     margin-top: 10px;
+
+    &-inputsWrapper {
+        display: flex;
+        justify-content: space-between;
+    }
 
     &__element {
         width: 170px;
         padding: 3px;
+    }
+
+    &__button {
+        width: 100%;
+        margin-top: 15px;
     }
 }

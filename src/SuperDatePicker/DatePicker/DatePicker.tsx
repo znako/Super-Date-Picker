@@ -7,12 +7,11 @@ export type ControlTypes = "absolute" | "relative" | "now";
 
 interface DatePickerProps {
     date: Date;
-    onChangeDate: (day: Date) => void;
-    onSetIsNowDate: (isNowDate: boolean) => void;
+    onChangeDate: (day: Date, isNow?: boolean) => void;
 }
 
 export const DatePicker = (props: DatePickerProps) => {
-    const { onChangeDate, date, onSetIsNowDate } = props;
+    const { onChangeDate, date } = props;
     const [controlType, setControlType] = useState<ControlTypes>("absolute");
 
     const onChangeControl = (controlType: ControlTypes) => () => {
@@ -29,7 +28,6 @@ export const DatePicker = (props: DatePickerProps) => {
                 date={date}
                 controlType={controlType}
                 onChangeDate={onChangeDate}
-                onSetIsNowDate={onSetIsNowDate}
             />
         </div>
     );

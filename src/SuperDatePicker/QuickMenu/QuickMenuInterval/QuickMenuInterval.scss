@@ -1,0 +1,26 @@
+.QuickMenuInterval {
+    &-body {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 10px;
+
+        &__button {
+            width: 90px;
+            height: 32px;
+        }
+    }
+
+    &-inputsWrapper {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 300px;
+
+        &__input {
+            width: 147px;
+            height: 32px;
+            padding: 3px;
+        }
+    }
+}

@@ -4,17 +4,15 @@ import { Button, ButtonTheme } from "shared/ui/Button/Button";
 import "./DatePickerNow.scss";
 
 interface DatePickerNowProps {
-    onChangeDate: (day: Date) => void;
-    onSetIsNowDate: (isNowDate: boolean) => void;
+    onChangeDate: (day: Date, isNow?: boolean) => void;
     className?: string;
 }
 
 export const DatePickerNow = (props: DatePickerNowProps) => {
-    const { onChangeDate, onSetIsNowDate, className } = props;
+    const { onChangeDate, className } = props;
 
     const onClickNowHandler = () => {
-        onChangeDate(new Date());
-        onSetIsNowDate(true);
+        onChangeDate(new Date(), true);
     };
 
     return (

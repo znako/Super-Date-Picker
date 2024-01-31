@@ -8,8 +8,11 @@
     font-weight: bold;
 
     &_clear {
+        text-align: inherit;
+        font-size: inherit;
         padding: 0;
         background: none;
+        font-weight: normal;
     }
 
     &_primary {

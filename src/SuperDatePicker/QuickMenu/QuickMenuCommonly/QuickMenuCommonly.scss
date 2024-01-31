@@ -1,0 +1,15 @@
+.QuickMenuCommonly {
+    &-container {
+        display: grid;
+        grid-template-columns: repeat(2, 200px);
+        margin-top: 10px;
+    }
+
+    &__element {
+        color: rgb(45, 106, 175);
+
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+}
