@@ -17,8 +17,8 @@ import { Calendar } from "./DatePicker/DatePickerContent/Calendar/Calendar";
 import { DatePicker } from "./DatePicker/DatePicker";
 import "./SuperDatePicker.scss";
 import { QuickMenu } from "./QuickMenu/QuickMenu";
-
-const WEEKDAYS = ["MO", "TU", "WE", "TH", "FR", "SA", "SU"];
+import { ReactComponent as CalendarIcon } from "shared/assets/calendar.svg";
+import { ReactComponent as ArrowIcon } from "shared/assets/right-arrow.svg";
 
 type DateSideType = "left" | "right";
 
@@ -51,12 +51,13 @@ export const SuperDatePicker = (props: SuperDatePickerProps) => {
         setDateSide(dateSide);
     };
 
-    useEffect(() => {
-        console.log(recentlyUsed);
-    }, [recentlyUsed]);
-
     const setRecentlyUsedUtility = (content: JSX.Element) => {
         setRecentlyUsed((prevState) => [content, ...prevState.slice(0, 19)]);
+    };
+
+    const handleError = () => {
+        setIntervalData(null);
+        setError(true);
     };
 
     const onChangeDate = (day: Date, isNow?: boolean) => {
@@ -77,6 +78,7 @@ export const SuperDatePicker = (props: SuperDatePickerProps) => {
                             side === "right" ? !!isNow : isRightDateNow
                         );
                         setInRecently(leftDate, rightDate, side);
+                        setError(false);
                     }}
                 >
                     {((side === "left" && isNow) ||
@@ -96,20 +98,18 @@ export const SuperDatePicker = (props: SuperDatePickerProps) => {
         if (dateSide === "left") {
             setLeftDate(day);
             setIsLeftDateNow(isNow ?? false);
-            if (day < rightDate) {
+            if (day < rightDate && !(isNow && isRightDateNow)) {
                 setInRecently(day, rightDate, "left");
             } else {
-                setIntervalData(null);
-                setError(true);
+                handleError();
             }
         } else if (dateSide === "right") {
             setRightDate(day);
             setIsRightDateNow(isNow ?? false);
-            if (leftDate < day) {
+            if (leftDate < day && !(isNow && isLeftDateNow)) {
                 setInRecently(leftDate, day, "right");
             } else {
-                setIntervalData(null);
-                setError(true);
+                handleError();
             }
         }
     };
@@ -165,9 +165,15 @@ export const SuperDatePicker = (props: SuperDatePickerProps) => {
                 }
                 trigger={"click"}
             >
-                <Button theme={ButtonTheme.PRIMARY}>quick</Button>
+                <Button
+                    theme={ButtonTheme.CLEAR}
+                    className="SuperDatePicker__quick-menu-button"
+                >
+                    <CalendarIcon />
+                    <ArrowIcon className="SuperDatePicker__arrow-icon" />
+                </Button>
             </Popover>
-            <div className="SuperDatePicker-inputWrapper">
+            <div className={"SuperDatePicker-inputWrapper"}>
                 <Popover
                     content={
                         <DatePicker
@@ -179,13 +185,20 @@ export const SuperDatePicker = (props: SuperDatePickerProps) => {
                 >
                     <div
                         onClick={onClickDiv("left")}
-                        className="SuperDatePicker-inputWrapper__input"
+                        className={classNames(
+                            "SuperDatePicker-inputWrapper__input",
+                            { "SuperDatePicker-inputWrapper_error": error },
+                            ["SuperDatePicker-inputWrapper__input_left"]
+                        )}
                     >
                         {isLeftDateNow
                             ? "now"
                             : leftDate && getFormattedDate(leftDate)}
                     </div>
                 </Popover>
+                <span className="SuperDatePicker-inputWrapper__arrow">
+                    {"->"}
+                </span>
                 <Popover
                     content={
                         <DatePicker
@@ -197,7 +210,11 @@ export const SuperDatePicker = (props: SuperDatePickerProps) => {
                 >
                     <div
                         onClick={onClickDiv("right")}
-                        className="SuperDatePicker-inputWrapper__input"
+                        className={classNames(
+                            "SuperDatePicker-inputWrapper__input",
+                            { "SuperDatePicker-inputWrapper_error": error },
+                            []
+                        )}
                     >
                         {isRightDateNow
                             ? "now"
@@ -208,7 +225,7 @@ export const SuperDatePicker = (props: SuperDatePickerProps) => {
             <Button
                 onClick={onClickRefresh}
                 theme={error ? ButtonTheme.DISABLED : ButtonTheme.PRIMARY}
-                className={"SuperDatePicker__button"}
+                className={"SuperDatePicker__refresh-button"}
             >
                 Refresh
             </Button>

@@ -2,6 +2,8 @@ import React, { useEffect, useRef, useState } from "react";
 import { classNames } from "shared/lib/classNames/classNames";
 import { Button, ButtonTheme } from "shared/ui/Button/Button";
 import "./QuickMenuInterval.scss";
+import { ReactComponent as PlayIcon } from "shared/assets/play.svg";
+import { ReactComponent as StopIcon } from "shared/assets/stop.svg";
 
 interface QuickMenuIntervalProps {
     className?: string;
@@ -73,6 +75,16 @@ export const QuickMenuInterval = (props: QuickMenuIntervalProps) => {
                         onClick={onClickStartInterval}
                         className="QuickMenuInterval-body__button"
                     >
+                        <PlayIcon
+                            className={classNames(
+                                "QuickMenuInterval-inputsWrapper__icon",
+                                {
+                                    "QuickMenuInterval-inputsWrapper__icon_disabled":
+                                        isUnvalid,
+                                },
+                                []
+                            )}
+                        />
                         Start
                     </Button>
                 ) : (
@@ -81,6 +93,7 @@ export const QuickMenuInterval = (props: QuickMenuIntervalProps) => {
                         onClick={onClickStopInterval}
                         className="QuickMenuInterval-body__button"
                     >
+                        <StopIcon className="QuickMenuInterval-inputsWrapper__icon" />
                         Stop
                     </Button>
                 )}
