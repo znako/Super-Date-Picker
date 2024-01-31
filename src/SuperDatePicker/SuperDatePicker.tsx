@@ -12,7 +12,7 @@ import {
 import React, { useEffect, useRef, useState } from "react";
 import { Button, ButtonTheme } from "shared/ui/Button/Button";
 import { classNames } from "../shared/lib/classNames/classNames";
-import { Calendar } from "./Calendar/Calendar";
+import { Calendar } from "./DatePicker/DatePickerContent/Calendar/Calendar";
 import { DatePicker } from "./DatePicker/DatePicker";
 import "./SuperDatePicker.scss";
 

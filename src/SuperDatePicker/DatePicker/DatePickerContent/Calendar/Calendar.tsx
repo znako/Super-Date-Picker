@@ -1,4 +1,5 @@
 import {
+    addDays,
     addMonths,
     eachDayOfInterval,
     endOfMonth,
@@ -16,7 +17,7 @@ import {
     startOfMonth,
 } from "date-fns";
 import { useCallback, useEffect, useState } from "react";
-import { classNames } from "../../shared/lib/classNames/classNames";
+import { classNames } from "../../../../shared/lib/classNames/classNames";
 import "./Calendar.scss";
 import { CalendarElement } from "./CalendarElement/CalendarElement";
 import { CalendarHeader } from "./CalendarHeader/CalendarHeader";
@@ -45,6 +46,33 @@ export const Calendar = (props: CalendarProps) => {
         start: firstDayOfMonth,
         end: lastDayOfMonth,
     });
+    const startOfPrevMonth = addDays(
+        firstDayOfMonth,
+        -((getDay(firstDayOfMonth) || WEEKDAYS.length) - 1)
+    );
+
+    const endOfPrevMonth = addDays(firstDayOfMonth, -1);
+    const daysInPreviousMonth =
+        startOfPrevMonth <= endOfPrevMonth
+            ? eachDayOfInterval({
+                  start: startOfPrevMonth,
+                  end: endOfPrevMonth,
+              })
+            : [];
+
+    const startOfNextMonth = addDays(lastDayOfMonth, 1);
+    const endOfNextMonth = addDays(
+        lastDayOfMonth,
+        WEEKDAYS.length - (getDay(lastDayOfMonth) || WEEKDAYS.length)
+    );
+    console.log(startOfNextMonth, endOfNextMonth);
+    const daysInNextMonth =
+        startOfNextMonth <= endOfNextMonth
+            ? eachDayOfInterval({
+                  start: startOfNextMonth,
+                  end: endOfNextMonth,
+              })
+            : [];
 
     const onClickArrowHeader = (type: "next" | "prev") => () => {
         const newDate = addMonths(calendarDate, type === "next" ? 1 : -1);
@@ -115,13 +143,17 @@ export const Calendar = (props: CalendarProps) => {
                             {weekday}
                         </CalendarElement>
                     ))}
-                    {new Array((getDay(firstDayOfMonth) || 7) - 1)
-                        .fill(0)
-                        .map((_, index) => (
-                            <CalendarElement
-                                key={"empty-" + index}
-                            ></CalendarElement>
-                        ))}
+                    {daysInPreviousMonth.map((day, index) => (
+                        <CalendarElement
+                            key={"prev-" + index}
+                            className={classNames("dateContainer__date", {}, [
+                                "dateContainer__date_not-this-month",
+                            ])}
+                            onClick={onClickDateHandler(day)}
+                        >
+                            {format(day, "d")}
+                        </CalendarElement>
+                    ))}
                     {daysInMonth.map((day, index) => (
                         <CalendarElement
                             key={index}
@@ -139,6 +171,17 @@ export const Calendar = (props: CalendarProps) => {
                                 },
                                 []
                             )}
+                            onClick={onClickDateHandler(day)}
+                        >
+                            {format(day, "d")}
+                        </CalendarElement>
+                    ))}
+                    {daysInNextMonth.map((day, index) => (
+                        <CalendarElement
+                            key={"next-" + index}
+                            className={classNames("dateContainer__date", {}, [
+                                "dateContainer__date_not-this-month",
+                            ])}
                             onClick={onClickDateHandler(day)}
                         >
                             {format(day, "d")}

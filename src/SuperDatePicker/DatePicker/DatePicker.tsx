@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Calendar } from "SuperDatePicker/Calendar/Calendar";
+import { Calendar } from "SuperDatePicker/DatePicker/DatePickerContent/Calendar/Calendar";
 import { DatePickerContent } from "./DatePickerContent/DatePickerContent";
 import { DatePickerControls } from "./DatePickerControls/DatePickerControls";
 

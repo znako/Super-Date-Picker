@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Calendar } from "../../Calendar/Calendar";
+import { Calendar } from "./Calendar/Calendar";
 import { ControlTypes } from "../DatePicker";
 import { DatePickerNow } from "./DatePickerNow/DatePickerNow";
 import { DatePickerRelative } from "./DatePickerRelative/DatePickerRelative";
