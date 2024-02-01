@@ -1,0 +1,17 @@
+{
+  "files": {
+    "main.css": "/Super-Date-Picker/static/css/main.34b3c678.css",
+    "main.js": "/Super-Date-Picker/static/js/main.6610c294.js",
+    "index.html": "/Super-Date-Picker/index.html",
+    "static/media/right-arrow.svg": "/Super-Date-Picker/static/media/right-arrow.207dd2044129714ddd4a764f36367177.svg",
+    "static/media/calendar.svg": "/Super-Date-Picker/static/media/calendar.50c90f262b71585d664d484725eab3e6.svg",
+    "static/media/play.svg": "/Super-Date-Picker/static/media/play.33dc022874f16673c0e3c242fc43c4de.svg",
+    "static/media/stop.svg": "/Super-Date-Picker/static/media/stop.281a04bd0a8fad3424b3ba1e8bf70a69.svg",
+    "main.34b3c678.css.map": "/Super-Date-Picker/static/css/main.34b3c678.css.map",
+    "main.6610c294.js.map": "/Super-Date-Picker/static/js/main.6610c294.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.34b3c678.css",
+    "static/js/main.6610c294.js"
+  ]
+}
