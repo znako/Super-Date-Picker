@@ -30,10 +30,22 @@ interface SuperDatePickerProps {
     className?: string;
     startDate?: Date;
     endDate?: Date;
+    onChangeDate: ({
+        startDate,
+        endDate,
+    }: {
+        startDate: Date;
+        endDate: Date;
+    }) => void;
 }
 
 export const SuperDatePicker = (props: SuperDatePickerProps) => {
-    const { className, startDate, endDate } = props;
+    const {
+        className,
+        startDate,
+        endDate,
+        onChangeDate: onChangeDateProps,
+    } = props;
     const [dateSide, setDateSide] = useState<null | DateSideType>(null);
     const currentDate = new Date();
     const [isLeftDateNow, setIsLeftDateNow] = useState<boolean>(false);
@@ -149,6 +161,10 @@ export const SuperDatePicker = (props: SuperDatePickerProps) => {
         setIsRightDateNow(false);
     };
 
+    useEffect(() => {
+        onChangeDateProps({ startDate: leftDate, endDate: rightDate });
+    }, [leftDate, rightDate]);
+
     return (
         <div className={classNames("SuperDatePicker", {}, [className])}>
             <Popover
@@ -226,6 +242,7 @@ export const SuperDatePicker = (props: SuperDatePickerProps) => {
                 onClick={onClickRefresh}
                 theme={error ? ButtonTheme.DISABLED : ButtonTheme.PRIMARY}
                 className={"SuperDatePicker__refresh-button"}
+                disabled={error}
             >
                 Refresh
             </Button>

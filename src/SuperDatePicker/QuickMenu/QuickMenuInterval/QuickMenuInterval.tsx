@@ -26,7 +26,8 @@ export const QuickMenuInterval = (props: QuickMenuIntervalProps) => {
 
     const onChangeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
         setIsUnvalid(
-            !e.target.value.match(/^(?![0.]+$)\d+(\.\d{1,2})?$/gm)?.length
+            !e.target.value &&
+                !e.target.value.match(/^(?![0.]+$)\d+(\.\d{1,2})?$/gm)?.length
         );
         setInputValue(e.target.value);
     };
@@ -73,6 +74,7 @@ export const QuickMenuInterval = (props: QuickMenuIntervalProps) => {
                                 : ButtonTheme.PRIMARY
                         }
                         onClick={onClickStartInterval}
+                        disabled={error || isUnvalid}
                         className="QuickMenuInterval-body__button"
                     >
                         <PlayIcon
@@ -80,7 +82,7 @@ export const QuickMenuInterval = (props: QuickMenuIntervalProps) => {
                                 "QuickMenuInterval-inputsWrapper__icon",
                                 {
                                     "QuickMenuInterval-inputsWrapper__icon_disabled":
-                                        isUnvalid,
+                                        error || isUnvalid,
                                 },
                                 []
                             )}

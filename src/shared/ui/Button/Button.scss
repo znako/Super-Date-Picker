@@ -22,13 +22,18 @@
     }
 
     &_disabled {
-        opacity: 0.7;
+        opacity: 0.8;
         cursor: not-allowed;
     }
-}
 
-.Button:hover {
-    opacity: 0.8;
-    fill-opacity: 0.8;
-    stroke-opacity: 0.8;
+    &:disabled {
+        background-color: #cccccc32;
+        color: rgba(0, 0, 0, 0.479);
+    }
+
+    &:hover {
+        opacity: 0.8;
+        fill-opacity: 0.8;
+        stroke-opacity: 0.8;
+    }
 }
