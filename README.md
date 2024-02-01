@@ -1,46 +1,103 @@
-# Getting Started with Create React App
+# UI Компонент Super Date Picker
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Что нужно было сделать
 
-## Available Scripts
+Нужно разработать компонент для библиотеки компонентов (в данном случае это можно сделать в отдельном проекте) Super Data Picker.
+За образец можно взять пример из Elastic (TM) UI, <a href="https://eui.elastic.co/pr_3350/#/forms/super-date-picker"> ссылка </a>
+Компонент достаточно сложный и состоит из нескольких отдельных блоков. Чем больше функционала данного компонента Вы выполните, тем лучше.
+Компонент должен быть написан на React с TypeScript.
+Только NPM пакеты! (yarn в нашей работе не используется).
 
-In the project directory, you can run:
+## Описание решения
+### Описание компонента
+Компонент Super Date Picker принимает из внешнего кода 3 props`a: startDate, endDate и callback onChangeDate.
+Тем самым реализуется возможность управления состоянием компонента из внешнего кода, а также отлавливание изменения дат
 
-### `npm start`
+### Фичи компонента
+Компонент подразумевает выбор пользователем интервала дат. Это можно сделать несколькими способами:
+1) <b>При нажатии на одну из дат </b>
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+    При нажатии появляется Popover, с возможностью выбора одного из типа задания даты:
+    - <i> Абсолютный </i>
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+      Компонент календарь, привычный и удобный виджет выбора даты
+      
+      Отображается текущий месяц и год
+      
+      При нажатии на дату происходит изменение соответствующей даты на выбранную
+      
+      Есть возможность переключаться по стрелкам для изменения месяца
+      
+      Также кликабельными являются месяц и год - появляется соответствующее окно с выбором
+      
+      Еще одной фичей календаря является установка времени для выбранной даты
+  
+       <img width="657" alt="Снимок экрана 2024-02-01 в 13 31 53" src="https://github.com/znako/Super-Date-Picker/assets/91160077/0efb2051-6d1b-44e7-b0f1-f21932c01de4">
+       
+   - <i> Относительный </i>
 
-### `npm test`
+      Способ выбора даты относительно текущей
+     
+      Можно ввести число и выбрать опцию - от секунд до лет как до текущей даты, так и после
+     
+      Кнопка для сохранения изменений
+     
+      <img width="653" alt="Снимок экрана 2024-02-01 в 13 36 30" src="https://github.com/znako/Super-Date-Picker/assets/91160077/ad110445-9bd1-4f30-bfc4-803317d19f2c">
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+    - <i> Сейчас </i>
 
-### `npm run build`
+      Способ выбора текущей даты
+      
+      Этот способ отличается возможностью обновления текущей даты при нажатии на кнопку Refresh или при установке соответствующего интервала обновления
+    
+      <img width="641" alt="Снимок экрана 2024-02-01 в 13 39 24" src="https://github.com/znako/Super-Date-Picker/assets/91160077/e96c1714-a554-4f90-bb84-52e9be698bbe">
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+2) <b>При нажатии на кнопку "Меню быстрого доступа" </b>
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+      При нажатии появляется Popover с 3 блоками:
+   
+      <img width="667" alt="Снимок экрана 2024-02-01 в 13 42 18" src="https://github.com/znako/Super-Date-Picker/assets/91160077/990ed665-49e3-4fc7-b904-07c08929f19e">
+    
+     - <i> Часто используемые </i>
+     
+        Шаблоны часто используемых промежутков дат
+       
+        Например, вчера - выбирается промежуток от начала вчерашнего дня до конца вчерашнего дня
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+     - <i> Недавно используемые </i>
+     
+        Промежутки дат, которые недавно выбирал пользователь
 
-### `npm run eject`
+        Хранятся последние 20 промежутков
+       
+     - <i> Установка автообновления даты now </i>
+     
+        Для включения автообновления дат необходимо ввести число и единицу времени - секунды, минуты, часы и нажать кнопку Start
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+        Если в одну из дат установлена дата now, то через каждый указанный промежуток времени дата будет устанавливаться на текущую
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+        Есть возможность отменить автообновление - нажать на кнопку Stop
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+<hr />
+При выборе даты может возникнуть ошибка, если дата старта больше или равна дате конца
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+Тогда происходит отключение кнопок, подсвечивание дат красными
 
-## Learn More
+<img width="677" alt="Снимок экрана 2024-02-01 в 13 55 55" src="https://github.com/znako/Super-Date-Picker/assets/91160077/f976002a-bf77-4498-8a90-f9c68d458cda">
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+<hr />
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+  Компонент написан на React + TS, препроцессор SASS
+  
+  Для работы с датами используется библиотека date-fns
+  
+  Popover взят из библиотеки antd
+  
+  Комментарии по коду можно посмотреть в самом коде
+
+<hr />
+<a href="https://znako.github.io/Super-Date-Picker/"> GitHub Pages </a>
+     
+
+      
+       
