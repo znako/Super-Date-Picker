@@ -25,7 +25,7 @@ export const Button = (props: ButtonProps) => {
     } = props;
     return (
         <button
-            className={classNames("Button", { ["Button_disabled"]: disabled }, [
+            className={classNames("Button", { "Button_disabled": disabled }, [
                 className,
                 `Button_${theme}`,
             ])}

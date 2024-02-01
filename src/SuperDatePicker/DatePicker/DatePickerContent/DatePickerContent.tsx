@@ -10,6 +10,11 @@ interface DatePickerContentProps {
     date: Date;
 }
 
+// Компонент отображения тела DatePicker`a
+// В зависимости от контрола отображается:
+// "Absolute" - Calendar, чтоб конкретно выбрать дату
+// "Relative" - DatePickerRelative, чтобы выбрать дату относительно текущей даты
+// "Now" - DatePickerNow, установить текущую дату с возможностью refresh
 export const DatePickerContent = (props: DatePickerContentProps) => {
     const { controlType, onChangeDate, date } = props;
 

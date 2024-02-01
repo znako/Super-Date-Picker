@@ -1,19 +1,8 @@
 import { Popover } from "antd";
-import {
-    addMinutes,
-    addMonths,
-    eachDayOfInterval,
-    endOfMonth,
-    format,
-    getDay,
-    interval,
-    isSameDay,
-    startOfMonth,
-} from "date-fns";
-import React, { HTMLFactory, useEffect, useRef, useState } from "react";
+import { addMinutes, format } from "date-fns";
+import React, { useEffect, useState } from "react";
 import { Button, ButtonTheme } from "shared/ui/Button/Button";
 import { classNames } from "../shared/lib/classNames/classNames";
-import { Calendar } from "./DatePicker/DatePickerContent/Calendar/Calendar";
 import { DatePicker } from "./DatePicker/DatePicker";
 import "./SuperDatePicker.scss";
 import { QuickMenu } from "./QuickMenu/QuickMenu";
@@ -39,6 +28,8 @@ interface SuperDatePickerProps {
     }) => void;
 }
 
+// Главный компонент, к которому обращаются из внешнего кода
+// Принимает начальную дату, конечную дату и функцию onChange
 export const SuperDatePicker = (props: SuperDatePickerProps) => {
     const {
         className,
@@ -46,6 +37,7 @@ export const SuperDatePicker = (props: SuperDatePickerProps) => {
         endDate,
         onChangeDate: onChangeDateProps,
     } = props;
+
     const [dateSide, setDateSide] = useState<null | DateSideType>(null);
     const currentDate = new Date();
     const [isLeftDateNow, setIsLeftDateNow] = useState<boolean>(false);
@@ -54,7 +46,6 @@ export const SuperDatePicker = (props: SuperDatePickerProps) => {
     const [rightDate, setRightDate] = useState<Date>(
         endDate || addMinutes(currentDate, 30)
     );
-
     const [error, setError] = useState(false);
     const [intervalData, setIntervalData] = useState<null | number>(null);
     const [recentlyUsed, setRecentlyUsed] = useState<Array<JSX.Element>>([]);
@@ -63,6 +54,7 @@ export const SuperDatePicker = (props: SuperDatePickerProps) => {
         setDateSide(dateSide);
     };
 
+    // Устанавливает запрос, переданный параметром в виде готового jsx элемента, в стейт последних 20 сделанных запросов
     const setRecentlyUsedUtility = (content: JSX.Element) => {
         setRecentlyUsed((prevState) => [content, ...prevState.slice(0, 19)]);
     };
@@ -72,6 +64,8 @@ export const SuperDatePicker = (props: SuperDatePickerProps) => {
         setError(true);
     };
 
+    // Callback, передаваемый в DatePicker
+    // Принимаем дату, проверяем на ошибки, если все ок, то обновляем дату и добавляем как последний сделанный запрос
     const onChangeDate = (day: Date, isNow?: boolean) => {
         const setInRecently = (
             leftDate: Date,
@@ -126,7 +120,9 @@ export const SuperDatePicker = (props: SuperDatePickerProps) => {
         }
     };
 
-    const onClickRefresh = () => {
+    // Callback на Refresh
+    // Если есть где-то дата, указанная как now, то обновляем на текущую
+    const onRefresh = () => {
         const now = new Date();
         if (isLeftDateNow) {
             setLeftDate(now);
@@ -137,10 +133,12 @@ export const SuperDatePicker = (props: SuperDatePickerProps) => {
         }
     };
 
+    // Работа с интервалом
+    // Через указанный период вызываем функцию onRefresh. Интервал очиститься, если произойдет ошибка или пользователь нажмет на кнопку
     useEffect(() => {
         let intervalId: NodeJS.Timer | undefined;
         if (intervalData !== null) {
-            intervalId = setInterval(onClickRefresh, intervalData);
+            intervalId = setInterval(onRefresh, intervalData);
         } else {
             clearInterval(intervalId);
             setIntervalData(null);
@@ -161,6 +159,7 @@ export const SuperDatePicker = (props: SuperDatePickerProps) => {
         setIsRightDateNow(false);
     };
 
+    // Вызываем функцию onChange, которую нам передали из внешнего кода, каждый раз, когда меняется дата
     useEffect(() => {
         onChangeDateProps({ startDate: leftDate, endDate: rightDate });
     }, [leftDate, rightDate]);
@@ -239,7 +238,7 @@ export const SuperDatePicker = (props: SuperDatePickerProps) => {
                 </Popover>
             </div>
             <Button
-                onClick={onClickRefresh}
+                onClick={onRefresh}
                 theme={error ? ButtonTheme.DISABLED : ButtonTheme.PRIMARY}
                 className={"SuperDatePicker__refresh-button"}
                 disabled={error}

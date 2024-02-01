@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useState } from "react";
 import { classNames } from "shared/lib/classNames/classNames";
 import { Button, ButtonTheme } from "shared/ui/Button/Button";
 import "./QuickMenuInterval.scss";
@@ -18,6 +18,9 @@ const OPTIONS: Record<OptionsType, number> = {
     Hours: 3600 * 1000,
 };
 
+// Создание автобновление дат с помощью интервала
+// Когда кликаем на старт передаем в главный компонент время для интервала и говорим тем самым что надо его запустить, там в UseEffecte мы это отлавливаем и создаем интервал
+// При нажатии на стоп аналогично наоборот
 export const QuickMenuInterval = (props: QuickMenuIntervalProps) => {
     const { className, intervalData, setIntervalData, error } = props;
     const [inputValue, setInputValue] = useState("");

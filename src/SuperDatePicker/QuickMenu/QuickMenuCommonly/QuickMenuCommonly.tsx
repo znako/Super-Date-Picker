@@ -18,17 +18,11 @@ interface QuickMenuCommonlyProps {
     setLeftDate: (date: Date) => void;
     setRightDate: (date: Date) => void;
     setRecentlyUsed: (content: JSX.Element) => void;
-    recentlyUsed: Array<JSX.Element>;
 }
 
+// Шаблоны готовых вариантов дат
 export const QuickMenuCommonly = (props: QuickMenuCommonlyProps) => {
-    const {
-        className,
-        setLeftDate,
-        setRightDate,
-        setRecentlyUsed,
-        recentlyUsed,
-    } = props;
+    const { className, setLeftDate, setRightDate, setRecentlyUsed } = props;
     const currentDate = new Date();
 
     const CommonlyUsedOptions: Record<
@@ -69,6 +63,9 @@ export const QuickMenuCommonly = (props: QuickMenuCommonlyProps) => {
         },
     };
 
+    // Клик на один из шаблонов дат
+    // Устанавливаем даты в стейт
+    // Добавляем в список последне используемых
     const onClickOption =
         ({
             leftDate,
@@ -80,8 +77,6 @@ export const QuickMenuCommonly = (props: QuickMenuCommonlyProps) => {
             option: string;
         }) =>
         () => {
-            console.log("124", recentlyUsed);
-
             setLeftDate(leftDate);
             setRightDate(rightDate);
             const content = (

@@ -1,4 +1,4 @@
-import { addMinutes, format, getHours, getMinutes } from "date-fns";
+import { getHours, getMinutes } from "date-fns";
 import React, { useEffect, useRef } from "react";
 import { classNames } from "shared/lib/classNames/classNames";
 import "./CalendarTimePicker.scss";
@@ -17,12 +17,13 @@ interface CalendarTimePickerProps {
 
 const COUNT_OF_HALF_HOURS = 48;
 
+// Таймпикер
+// Позволяет выбрать время, доступно все времена с промежутком в пол часа
 export const CalendarTimePicker = (props: CalendarTimePickerProps) => {
     const { className, date, onClickTimeHandler } = props;
     const selectedTime = useRef<HTMLDivElement | null>(null);
 
     useEffect(() => {
-        console.log(selectedTime.current);
         selectedTime.current?.scrollIntoView({ block: "center" });
     }, []);
 

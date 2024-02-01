@@ -16,7 +16,7 @@ import {
     setSeconds,
     startOfMonth,
 } from "date-fns";
-import { useCallback, useEffect, useState } from "react";
+import { useState } from "react";
 import { classNames } from "../../../../shared/lib/classNames/classNames";
 import "./Calendar.scss";
 import { CalendarElement } from "./CalendarElement/CalendarElement";
@@ -32,6 +32,11 @@ interface CalendarProps {
     date: Date;
 }
 
+// Календарь
+// Привычный виджет календаря, есть возможность выбрать дату по клику на ячейку
+// можно переключаться по стрелочкам между месяцами
+// можно по нажатию на месяц выбрать месяц в году, а на год - соответственно год))
+// также есть TimePicker для выбора времени
 export const Calendar = (props: CalendarProps) => {
     const { onChangeDate, className, date } = props;
     const [showYearOrMonthPicker, setShowYearOrMonthPicker] = useState<
@@ -40,17 +45,19 @@ export const Calendar = (props: CalendarProps) => {
 
     const [calendarDate, setDate] = useState(date);
 
+    // Получаем даты текущего месяца
     const firstDayOfMonth = startOfMonth(calendarDate);
     const lastDayOfMonth = endOfMonth(calendarDate);
     const daysInMonth = eachDayOfInterval({
         start: firstDayOfMonth,
         end: lastDayOfMonth,
     });
+
+    // Получаем даты предыдущего месяца
     const startOfPrevMonth = addDays(
         firstDayOfMonth,
         -((getDay(firstDayOfMonth) || WEEKDAYS.length) - 1)
     );
-
     const endOfPrevMonth = addDays(firstDayOfMonth, -1);
     const daysInPreviousMonth =
         startOfPrevMonth <= endOfPrevMonth
@@ -60,12 +67,12 @@ export const Calendar = (props: CalendarProps) => {
               })
             : [];
 
+    // Получаем даты следующего месяца
     const startOfNextMonth = addDays(lastDayOfMonth, 1);
     const endOfNextMonth = addDays(
         lastDayOfMonth,
         WEEKDAYS.length - (getDay(lastDayOfMonth) || WEEKDAYS.length)
     );
-    console.log(startOfNextMonth, endOfNextMonth);
     const daysInNextMonth =
         startOfNextMonth <= endOfNextMonth
             ? eachDayOfInterval({
@@ -74,6 +81,7 @@ export const Calendar = (props: CalendarProps) => {
               })
             : [];
 
+    // Переключаемся по стрелкам между месяцами
     const onClickArrowHeader = (type: "next" | "prev") => () => {
         const newDate = addMonths(calendarDate, type === "next" ? 1 : -1);
         onChangeDate(newDate);
@@ -105,12 +113,14 @@ export const Calendar = (props: CalendarProps) => {
         }
     }
 
+    // Нажатие на дату
     const onClickDateHandler = (day: Date) => () => {
         const newDate = updateDate(day);
         onChangeDate(newDate);
         setDate(newDate);
     };
 
+    // Нажатие на время
     const onClickTimeHandler =
         ({ hours, minutes }: { hours: number; minutes: number }) =>
         () => {
@@ -119,14 +129,16 @@ export const Calendar = (props: CalendarProps) => {
             setDate(newDate);
         };
 
+    // Нажатие на месяц или год, показываем пикер месяца/года
+    const onClickYearOrMonthHeader = (type: "year" | "month") => () => {
+        setShowYearOrMonthPicker(type);
+    };
+
+    // Нажатие в пикере Месяц/Год
     const onClickYearOrMonthPicker = (date: Date) => () => {
         setDate(date);
         onChangeDate(date);
         setShowYearOrMonthPicker(null);
-    };
-
-    const onClickYearOrMonthHeader = (type: "year" | "month") => () => {
-        setShowYearOrMonthPicker(type);
     };
 
     return (

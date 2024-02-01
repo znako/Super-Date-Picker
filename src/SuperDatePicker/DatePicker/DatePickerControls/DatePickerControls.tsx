@@ -3,17 +3,13 @@ import { classNames } from "shared/lib/classNames/classNames";
 import { ControlTypes } from "../DatePicker";
 import "./DatePickerControls.scss";
 
-enum ControlTypesEnum {
-    ABSOLUTE = "Absolute",
-    RELATIVE = "Relative",
-}
-
 interface DatePickerControlsProps {
     controlType: ControlTypes;
     onChangeControl: (controlType: ControlTypes) => () => void;
     className?: string;
 }
 
+//Контролер для выбора Абсолютного, Отностильнего или Now времени
 export const DatePickerControls = (props: DatePickerControlsProps) => {
     const { controlType, onChangeControl, className } = props;
     return (

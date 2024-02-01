@@ -8,9 +8,11 @@ interface DatePickerNowProps {
     className?: string;
 }
 
+// Устанавливаем дату как now c возможностью обновления до текущей даты
 export const DatePickerNow = (props: DatePickerNowProps) => {
     const { onChangeDate, className } = props;
 
+    // Устанавливаем текущую и говорим, что она с возможностью обновления
     const onClickNowHandler = () => {
         onChangeDate(new Date(), true);
     };

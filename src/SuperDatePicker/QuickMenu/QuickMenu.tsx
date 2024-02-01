@@ -16,6 +16,10 @@ interface QuickMenuProps {
     error: boolean;
 }
 
+// Меню ьыстрого доступа
+// Позволяет установить даты по готовым шаблонам
+//           установить ранее используемые даты
+// А также установить автообновление дат
 export const QuickMenu = (props: QuickMenuProps) => {
     const {
         className,
@@ -34,7 +38,6 @@ export const QuickMenu = (props: QuickMenuProps) => {
                 setLeftDate={setLeftDate}
                 setRightDate={setRightDate}
                 setRecentlyUsed={setRecentlyUsed}
-                recentlyUsed={recentlyUsed}
             />
             <hr className="QuickMenu__line" />
             {!!recentlyUsed.length && (

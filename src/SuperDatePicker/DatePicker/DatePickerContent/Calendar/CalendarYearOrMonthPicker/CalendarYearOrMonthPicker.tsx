@@ -26,6 +26,9 @@ const MONTHS = [
     "December",
 ];
 
+// Пикер для Месяца/Года
+// Появляется блок, где для месяца показаны все месяца года для выбора
+// для года - 15 лет на выбор
 export const CalendarYearOrMonthPicker = (
     props: CalendarYearOrMonthPickerProps
 ) => {

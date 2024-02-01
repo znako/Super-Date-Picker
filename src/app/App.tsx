@@ -1,10 +1,11 @@
-import { format } from "date-fns";
+import { addMinutes } from "date-fns";
 import React, { useState } from "react";
 import { SuperDatePicker } from "../SuperDatePicker/SuperDatePicker";
 
 function App() {
+    // Пример взаимодействия с SuperDatePicker
     const [startDate, setStartDate] = useState<Date>(new Date());
-    const [endDate, setEndDate] = useState<Date>(new Date());
+    const [endDate, setEndDate] = useState<Date>(addMinutes(new Date(), 30));
 
     const onChangeDate = ({
         startDate,

@@ -1,4 +1,4 @@
-import { format, getMonth, getYear } from "date-fns";
+import { format } from "date-fns";
 import React from "react";
 import "./CalendarHeader.scss";
 import { classNames } from "shared/lib/classNames/classNames";
@@ -12,6 +12,7 @@ interface CalendarHeaderProps {
     onClick: (type: "year" | "month") => () => void;
 }
 
+// Хедер календаря: стрелки, месяц, год
 export const CalendarHeader = (props: CalendarHeaderProps) => {
     const { onClickArrowHeader, date, className, onClick } = props;
     return (

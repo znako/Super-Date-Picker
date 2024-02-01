@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { Calendar } from "SuperDatePicker/DatePicker/DatePickerContent/Calendar/Calendar";
 import { DatePickerContent } from "./DatePickerContent/DatePickerContent";
 import { DatePickerControls } from "./DatePickerControls/DatePickerControls";
 
@@ -10,6 +9,8 @@ interface DatePickerProps {
     onChangeDate: (day: Date, isNow?: boolean) => void;
 }
 
+// Компонент, который показывается при нажатии на одну из дат
+// В шапке находится контролер, в теле - компонент, который соответствует контролеру
 export const DatePicker = (props: DatePickerProps) => {
     const { onChangeDate, date } = props;
     const [controlType, setControlType] = useState<ControlTypes>("absolute");

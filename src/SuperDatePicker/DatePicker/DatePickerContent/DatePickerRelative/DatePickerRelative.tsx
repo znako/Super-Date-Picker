@@ -7,7 +7,6 @@ import {
     addWeeks,
     addYears,
 } from "date-fns";
-import { useRef, useState } from "react";
 import { classNames } from "shared/lib/classNames/classNames";
 import { Button, ButtonTheme } from "shared/ui/Button/Button";
 import "./DatePickerRelative.scss";
@@ -43,6 +42,7 @@ interface DatePickerRelativeProps {
     setSelectValue: (value: string) => void;
 }
 
+// Устанавливаем дату относительно текущей с помощью значений из инпута для некоторых опций (от секунд до лет как в сторону до даты, так и после)
 export const DatePickerRelative = (props: DatePickerRelativeProps) => {
     const {
         className,
@@ -55,6 +55,7 @@ export const DatePickerRelative = (props: DatePickerRelativeProps) => {
 
     const currentDate = new Date();
 
+    // валидация инпута
     const isValidInput = (value: string) => {
         return (
             value === "" ||
@@ -64,6 +65,7 @@ export const DatePickerRelative = (props: DatePickerRelativeProps) => {
         );
     };
 
+    // в зависимости от опции изменяем дату
     const changeDate = (inputValue: string, selectValue: string) => {
         const option = selectValue.split(" ")[0] as OptionsType;
         const type = selectValue.split(" ").length === 2 ? -1 : 1;

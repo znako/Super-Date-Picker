@@ -1,6 +1,7 @@
-export type Mods = Record<string, boolean | string | undefined>
+export type Mods = Record<string, boolean | string | undefined>;
 
-export function classNames (
+// Хелпер для удобного добавления классов, в том числе по условию
+export function classNames(
     cls: string,
     mods: Mods = {},
     additional: Array<string | undefined> = []
@@ -10,7 +11,6 @@ export function classNames (
         ...additional.filter(Boolean),
         ...Object.entries(mods)
             .filter(([_, value]) => Boolean(value))
-            .map(([className]) => className)
-    ]
-        .join(' ')
+            .map(([className]) => className),
+    ].join(" ");
 }

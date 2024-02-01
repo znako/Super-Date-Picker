@@ -7,6 +7,8 @@ interface QuickMenuRecentlyProps {
     recentlyUsed: Array<JSX.Element>;
 }
 
+// Список последних используемых дат
+// Принимает список уже готовых JSX элементов
 export const QuickMenuRecently = (props: QuickMenuRecentlyProps) => {
     const { className, recentlyUsed } = props;
 
